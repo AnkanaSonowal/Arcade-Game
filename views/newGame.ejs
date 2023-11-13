@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <!-- Include Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1 class="mt-4"><%= title %></h1>
+
+    <!-- New Game Form -->
+    <form action="/games" method="post">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="type">Type:</label>
+        <input type="text" class="form-control" id="type" name="type" required>
+      </div>
+      <div class="form-group">
+        <label for="minimumAge">Minimum Age:</label>
+        <input type="number" class="form-control" id="minimumAge" name="minimumAge" required>
+      </div>
+      <div class="form-group">
+        <label for="hourlyPricing">Hourly Pricing:</label>
+        <input type="text" class="form-control" id="hourlyPricing" name="hourlyPricing" required>
+      </div>
+      <div class="form-group">
+        <label for="perGamePricing">Pricing (Per Game):</label>
+        <input type="text" class="form-control" id="perGamePricing" name="perGamePricing" required>
+      </div>
+      <div class="form-group">
+        <label for="imagePath">Image Path:</label>
+        <input type="text" class="form-control" id="imagePath" name="imagePath" required>
+      </div>
+      <div class="form-group">
+        <label for="imageAlt">Image Alt Description:</label>
+        <input type="text" class="form-control" id="imageAlt" name="imageAlt" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Save</button>
+      <a href="/games" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+
+  <!-- Include Bootstrap JS (Optional) -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

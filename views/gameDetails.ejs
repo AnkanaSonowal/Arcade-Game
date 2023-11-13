@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <!-- Include Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Include your custom styles -->
+  <link href="/styles.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <!-- Game Details -->
+    <h1 class="mt-4"><%= title %></h1>
+
+    <!-- Image of the Game with Tooltip -->
+    <div class="mt-4" style="width: 50%; height: auto; border: 1px solid #ddd;">
+      <img src="/<%= game.image.path %>?v=<%= new Date().getTime() %>" alt="<%= game.image.description %>" class="img-fluid" title="<%= game.image.description %>" data-toggle="tooltip" data-placement="bottom" 
+      onerror="handleImageError(this, '<%= game.image.description %>');">
+    </div>
+
+    <!-- Details about the Game -->
+    <div class="mt-4">
+      <h2>Game Details</h2>
+      <p><strong>Name:</strong> <%= game.name %></p>
+      <p><strong>Description:</strong> <%= game.description %></p>
+      <p><strong>Type:</strong> <%= game.type %></p>
+      <p><strong>Minimum Age:</strong> <%= game.minimumAge %></p>
+      <p><strong>Pricing (Hourly):</strong> <%= game.pricing.hourly %></p>
+      <p><strong>Pricing (Per Game):</strong> <%= game.pricing.perGame %></p>
+    </div>
+
+    <!-- Buttons: Edit Game and Delete Game -->
+    <div class="mt-4">
+      <a href="/games/<%= game._id %>/edit" class="btn btn-primary">Edit Game</a>
+      <form  id="deleteForm" action="/games/<%= game._id %>" method="POST" style="display: inline;">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit" class="btn btn-danger" onclick="confirmDelete('<%= game._id %>')">Delete Game</button>
+      </form>
+    </div>
+
+    <!-- Link to go back to the list -->
+    <div class="mt-4">
+      <a href="/games" class="btn btn-secondary">Back to List</a>
+    </div>
+  </div>
+
+  <!-- Include Bootstrap JS (Optional) -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <!-- Enable Bootstrap Tooltip -->
+  <script>
+    
+    function handleImageError(img, altDescription) {
+        console.log('Image error occurred');
+        img.onerror = null; // prevent infinite loop in case placeholder image fails to load
+
+        // Set a minimum height if the image fails to load
+        img.parentElement.style.minHeight = '400px';
+        // Set the alt text in the parent div
+        img.parentElement.setAttribute('data-alt', altDescription);
+    }
+    async function confirmDelete(gameId) {
+        if (confirm('Are you sure you want to delete this game?')) {
+      try {
+        event.preventDefault();
+        // Make a DELETE request using fetch
+        const response = await fetch(`/games/${gameId}`, {
+          method: 'DELETE'
+        });
+
+        // Check if the request was successful (status code 200-299)
+        if (response.ok) {
+            console.log("Going Back to home screen");
+          // Redirect to the home screen after successful deletion
+          window.location.href = '/games';
+        } else {
+          // Handle errors
+          console.error('Error deleting game:', response.statusText);
+          alert('Error deleting game. Please try again.');
+        }
+      } catch (error) {
+        console.error('Error deleting game:', error.message);
+        alert('Error deleting game. Please try again.');
+      }
+    }
+  }
+    $(document).ready(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+    
+  </script>
+
+  
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+   <!-- Include jQuery -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+   
+  <!-- Include Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/styles.css" rel="stylesheet">
+    <!-- Include your custom script -->
+    <script src="/script.js"></script>
+
+</head>
+<body>
+  <div class="container">
+
+    <!-- Title -->
+    <h1 class="mt-4"><%= title %></h1>
+
+    <div class="alert alert-info mt-3">
+        <p class="mb-0">This is the list of available games.</p>
+    </div>
+
+    <!-- Add New Game Button -->
+    <form action="/games/new" method="get">
+      <button type="submit" class="btn btn-primary add-game-btn">Add New Game</button>
+    </form>
+
+    <!-- Filter Form (Bootstrap) -->
+    <form action="/games/search" method="get" class="mb-4" id="filterForm">
+      <div class="form-row">
+        <div class="col-md-4 mb-2">
+          <input type="text" class="form-control" id="title" name="title" placeholder="Search Text">
+        </div>
+        <div class="col-md-4 mb-2">
+          <select class="form-control" id="type" name="type">
+            <option value="No Filter">No Filter</option>
+            <option value="Physical">Physical</option>
+            <option value="Virtual Reality">Virtual Reality</option>
+            <option value="Table Game">Table Game</option>
+            <option value="Interactive">Interactive</option>
+          </select>
+        </div>
+        <div class="col-md-4 mb-2">
+          <button type="submit" class="btn btn-primary">Apply Filter</button>
+        </div>
+      </div>
+    </form>
+
+    <!-- Display Games -->
+    <div class="row" id="gameGrid">
+      <% games.forEach(game => { %>
+        <div class="col-md-4">
+          <div class="card game-card" style="height: 250px;">
+            <img src="/<%= game.image.path %>?v=<%= new Date().getTime() %>" alt="<%= game.image.description %>" class="card-img-top game-image img-fluid">
+            <div class="card-body">
+              <h5 class="card-title"><a href="/games/<%= game._id %>"><%= game.name %></a></h5>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  
+
+  </div>
+
+  <!-- Include Bootstrap JS (Optional) -->
+  <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
