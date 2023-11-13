@@ -171,7 +171,7 @@ app.get('/games/:id/edit', async (req, res) => {
     }
   });
 
-  // Add this route at the end of your app.js file
+ // delete 
 app.delete('/games/:id', async (req, res) => {
     try {
       const gameId = req.params.id;
